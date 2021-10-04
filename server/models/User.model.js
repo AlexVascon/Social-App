@@ -29,6 +29,10 @@ const userSchema = new Schema({
     type: Array,
     default: []
   },
+  pending: {
+    type: Array,
+    default: []
+  } ,
   city: {
     type: String,
     default: ''

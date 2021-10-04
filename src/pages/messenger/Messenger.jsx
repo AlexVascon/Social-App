@@ -19,13 +19,12 @@ export default function Messenger() {
     const [newMessage, setNewMessage] = useState('');
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const socket = useRef();
     const { user } = useContext(AuthContext);
     const scrollRef = useRef();
-
-
+    const socket = useRef()
+  
     useEffect(() => {
-        socket.current = io("ws://localhost:5005");
+        socket.current = io("http://localhost:5500");
         socket.current.on("getMessage", (data) => {
           setArrivalMessage({
             sender: data.senderId,

@@ -6,7 +6,7 @@ import User from '../components/User';
 const API_URL = "http://localhost:5005"; 
 
 export default function UsersList() {
-    
+
 
     const [users, setUsers] = useState([]);
 
@@ -15,7 +15,7 @@ export default function UsersList() {
         .then(response => {
             setUsers(response.data);
         })
-        .catch(err => console.log('could not retrieve list of users. Error:', err));
+        .catch(err => console.log('could not retrieve list of users,', err));
     }, [])
     return (
         <div className='friends-suggestions'>

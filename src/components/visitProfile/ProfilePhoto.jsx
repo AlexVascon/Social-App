@@ -13,6 +13,13 @@ export default function ProfilePhoto(props) {
             setUser(response.data)
         })
         .catch(err => console.log(err));
+
+        const userId = props.userId
+        axios.post(`${API_URL}/follow/request`, userId ,{ withCredentials: true })
+        .then(response => {
+            console.log('request:', response);
+        })
+        .catch(err => console.log(err));
     }
 
     useEffect(() => {

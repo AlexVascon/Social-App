@@ -1,18 +1,22 @@
-const app = require("./app");
 
 // ℹ️ Sets the PORT for our app to have access to it. If no env has been set, we hard code it to 3000
 const PORT = process.env.PORT || 5005;
 
-let myServer = app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
-});
+const app = require("./app");
+
+let myServer =  require("http").createServer(app)
 
 const { Server } = require('socket.io');
-const io = new Server(myServer, {
-  cors: {
-    origin: '*',
-  }
-});
+const io = new Server(myServer,
+  {
+    cors: {
+      origin: 'http://localhost:3000',
+      methods: ["GET", "POST"],
+      credentials: true
+    }
+  });
+  
+app.use("/io", io)
 
 let users = [];
 
@@ -57,3 +61,6 @@ io.on("connection", (socket) => {
 });
 
 
+myServer.listen(PORT, () => {
+  console.log(`Server listening on port http://localhost:${PORT}`);
+});

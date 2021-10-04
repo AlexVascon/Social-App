@@ -8,7 +8,6 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 const app = express();
 require("./config/index")(app);
 
-
 // 👇 Start handling routes here
 const allRoutes = require("./routes");
 app.use("/", allRoutes);       // <== UPDATE
@@ -33,6 +32,9 @@ app.use('/comments', commentRouter);
 
 const chatRoutes = require('./routes/chat.routes');
 app.use('/chats', chatRoutes);
+
+const followRoutes = require('./routes/followers.routes');
+app.use('/follow', followRoutes);
 
 // require("./error-handling")(app);
 app.use(function (req, res, next) {
