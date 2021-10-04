@@ -24,7 +24,17 @@ export default function Messenger() {
     const socket = useRef()
   
     useEffect(() => {
-        socket.current = io("http://localhost:5500");
+        socket.current = io(
+            "http://localhost:5005",
+            {
+                reconnectionDelay: 1000,
+                reconnection: true,
+                reconnectionAttemps: 10,
+                transports: ['websocket'],
+                agent: false,
+                upgrade: false,
+                rejectUnauthorized: false
+            });
         socket.current.on("getMessage", (data) => {
           setArrivalMessage({
             sender: data.senderId,

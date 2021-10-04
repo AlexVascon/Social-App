@@ -15,8 +15,6 @@ const io = new Server(myServer,
       credentials: true
     }
   });
-  
-app.use("/io", io)
 
 let users = [];
 

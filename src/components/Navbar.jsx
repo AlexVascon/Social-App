@@ -61,10 +61,16 @@ export default function Navbar() {
         axios.get(`${API_URL}/follow/pending`, { withCredentials: true })
         .then(response => {
             setFollowers(response.data)
+            axios.post(`${API_URL}/follow/requestUsers`, followers, { withCredentials: true })
+            .then(response => {
+              setFollowers(response.data)
+            })
+            .catch(err => console.log(err))
         })
         .catch(err => console.log('follow err:',err))
     }
     getInfo(); 
+    console.log('followers', followers);
     },[])
     
     return (
