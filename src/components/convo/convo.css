@@ -1,0 +1,16 @@
+
+
+.convoIcon {
+    margin: .5em
+}
+
+.convo {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.convo:hover {
+    background-color: rgb(237, 232, 243);
+}
+
