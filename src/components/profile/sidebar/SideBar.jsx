@@ -7,7 +7,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import EventIcon from '@mui/icons-material/Event';
 import SchoolIcon from '@mui/icons-material/School';
-import FriendSuggestions from './FriendSuggestions';
+import FriendList from '../friendsList/FriendsList';
 
 export default function SideBar() {
     return (
@@ -48,7 +48,7 @@ export default function SideBar() {
                 </li>
             </ul>
             <hr className="sidebarHr" />
-            <FriendSuggestions />
+            <FriendList />
         </div>
         
         </>

@@ -1,0 +1,41 @@
+.visit-profile-image {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items:flex-end;
+    width: 18%;
+    height: 70%;
+    margin-top: 37%;
+    margin-right: 42%;
+    border-radius: 50%;
+    z-index: 3;
+    margin-bottom: 2em;
+}
+
+.visit-profile-image img {
+    border: 4px solid white;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+  
+.visit-profile-image h1 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-right: 0em;
+    color: black;
+    font: 700 35px sans-serif;
+}
+
+.visit-followers {
+    display: flex;
+    flex-direction: row;
+}
+  
+.visit-followers h3{
+    margin: 0 .3em;
+}
+
+.profile-name {
+    margin-right: 3em;
+}

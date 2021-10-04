@@ -1,17 +1,14 @@
-import React, {  useState } from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  withRouter
-} from "react-router-dom";
-import Visit from './pages/Visit';
+} 
+from "react-router-dom";
 import Signup from './pages/Signup';
-import Profile from './pages/Profile';
-import Feed from './pages/Feed'
+import Feed from './pages/feed/Feed';
 import Chats from './pages/Chats';
 import Login from './pages/Login';
 import axios from 'axios';
@@ -19,38 +16,41 @@ import { useHistory } from 'react-router-dom';
 import UpdateUser from './pages/UpdateUser';
 import CurrentChat from './components/CurrentChat';
 import Messenger from './pages/messenger/Messenger';
+import { AuthContext } from './context/auth.context';
+import Profile from './pages/profile/Profile';
+import Visit from './pages/visit/Visit';
 
 
 const API_URL = "http://localhost:5005";
 
 function App() {
 
-  const [value, setValue] = useState(null);
-  const [user, setUser] = useState(undefined);
 
-  const history = useHistory();
+  const { user } = useContext(AuthContext)
 
-  const handleSignIn = async (event) => {
-    event.preventDefault();
+  // const history = useHistory();
 
-    const { username, password } = event.target;
+  // const handleSignIn = async (event) => {
+  //   event.preventDefault();
 
-    const myUser = {
-      username: username.value,
-      password: password.value
-    }
+  //   const { username, password } = event.target;
 
-    try{
-      const userResponse = await axios.post(`${API_URL}/auth/login`, myUser, { withCredentials: true });
-      setUser(userResponse.data);
-    }catch(err){
-      console.log(err);
-    }
-  }
+  //   const myUser = {
+  //     username: username.value,
+  //     password: password.value
+  //   }
+
+  //   try{
+  //     const userResponse = await axios.post(`${API_URL}/auth/login`, myUser, { withCredentials: true });
+  //     setUser(userResponse.data);
+  //   }catch(err){
+  //     console.log(err);
+  //   }
+  // }
 
   return (
     <div className="App">
-     <Navbar />
+     <Navbar user={user} />
     
     <Switch>
       <Route exact path='/visit/:userId' component={Visit} />

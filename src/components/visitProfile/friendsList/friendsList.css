@@ -1,0 +1,23 @@
+.friends-suggestions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 1em;
+    padding: 0;
+    width: 100%;
+  }
+  
+.friends-suggestions h1 {
+    color: black;
+}
+  
+.friends-suggestions ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    list-style: none;
+    flex-wrap: wrap; 
+    padding: 0;
+}

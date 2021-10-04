@@ -1,0 +1,45 @@
+/* .profile-page {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 95vh;
+} */
+
+.profilePaigeContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 95vh;
+}
+
+.right-profile-view {
+    display: flex;
+    flex-direction: column;
+    width: 82%;
+    height: 100%;
+}
+
+.below-backdrop-view {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    min-height: 58%;
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: .5em;
+}
+  
+.right-info-view {
+    display: flex;
+    width: 38%;
+    height: 100%;
+    flex-direction: column;
+}

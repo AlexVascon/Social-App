@@ -51,7 +51,6 @@ export default function Messenger() {
       }, [arrivalMessage, currentChat]);
 
       useEffect(() => {
-          console.log('line 45', user)
         socket.current.emit("addUser", user?._id);
         socket.current.on("getUsers", (users) => {
           setOnlineUsers(
@@ -62,7 +61,6 @@ export default function Messenger() {
     
 
     useEffect(() => {
-        console.log('line 56', user)
         const getConversations = () => {
                 axios.get(`${API_URL}/chats/${user?._id}`, { withCredentials: true })
                 .then(res => {

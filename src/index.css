@@ -204,53 +204,12 @@ label {
 }
 /* end of signup*/
 
-
-/* profile */
-/*  view cards  */
-.profile-page {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  height: 95vh;
-}
-
-.right-profile-view {
-  display: flex;
-  flex-direction: column;
-  width: 82%;
-  height: 100%;
-}
-
-.below-backdrop-view {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  min-height: 58%;
-}
-
-.post-card {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin-top: .5em;
-}
-
-.right-info-view {
-  display: flex;
-  width: 38%;
-  height: 100%;
-  flex-direction: column;
-}
-/* end of view cards */
-
-
 .side-bar {
   width: 20%;
   height: calc(100vh - 7.5em);
+  /* height: 100vh; */
   border-radius: .8em;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   position: sticky;
 }
 
@@ -285,7 +244,7 @@ label {
   background-color: rgb(179, 179, 179);
 }
 
-.post {
+/* .post {
   flex: 5.5;
   width: 57%;
   height: 45%;
@@ -379,14 +338,14 @@ label {
   background-color: rgb(167, 87, 233);
   cursor: grab;
   box-shadow: 0 2px 8px 2px #a188c4;
-}
+} */
 
 .post-list {
   flex:5.5;
 }
 
  /* Post body */
- .post-body {
+ /* .post-body {
   margin: 1em 0;
   width: 100%;
   border-radius: 1em;
@@ -429,7 +388,7 @@ label {
   display: flex;
   justify-content: flex-start;
   padding: .5em 1.2em;
-}
+} */
 
 /* .delete-icon {
   justify-content: flex-end;
@@ -438,7 +397,7 @@ label {
   align-content: flex-end;
 } */
 
-.post-comments {
+/* .post-comments {
   max-height: 10em;
   overflow: scroll;
 }
@@ -453,7 +412,7 @@ label {
 
 .thumb-icon {
   padding: 0 .3em;
-}
+} */
 
 /* User info */
 .user-info {
@@ -530,33 +489,9 @@ label {
 /* End of user info */
 
 
-.friends-suggestions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  flex-direction: column;
-  margin-top: 1em;
-  padding: 0;
-  width: 100%;
-}
-
-.friends-suggestions h1 {
-  color: black;
-}
-
-.friends-suggestions ul {
-  display: flex;
-  justify-content: center;
-  list-style-type: none;
-  list-style: none;
-  flex-wrap: wrap; 
-  padding: 0;
-}
-
-.user-suggest {
+/* .user-suggest {
   margin: .2em;
-}
+} */
 
 .online {
   border: 4px solid green;

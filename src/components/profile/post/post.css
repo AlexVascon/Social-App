@@ -1,0 +1,79 @@
+.post-body {
+    margin: 1em 0;
+    width: 100%;
+    border-radius: 1em;
+    min-height: min-content;
+    -webkit-box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68); 
+    box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68);
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: .5em 0 0 1.8em;
+  }
+  
+  .post-header h4 {
+      padding: 0 .5em;
+    color: black;
+  }
+  
+  .post-image img {
+    margin: 0;
+      max-height: 30em;
+      object-fit: contain;
+  }
+  
+  .post-description {
+    align-self: flex-start;
+    text-align: left;
+  }
+  
+  .post-description p {
+    justify-content: flex-start;
+    align-self: flex-start;
+    padding: 0 0 0em 2em;
+    margin-top: 0;
+  }
+  
+  .post-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding: .5em 1.2em .9em 1.2em;
+  }
+
+  .post-comments {
+    max-height: 10em;
+    overflow: scroll;
+  }
+  
+  .post-comment-form {
+    display: flex;
+    margin: .5em 1em;
+  }
+  
+  .comment-post-input {
+    flex: 1;
+  }
+  
+  .thumb-icon {
+    padding: 0 .3em;
+  }
+
+  .footerIcon {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+
+  .delete-icon-span {
+      
+      flex: 1;
+  }
+
+  .delete-icon {
+     padding-left: 90%;
+  }
+
+
+
+

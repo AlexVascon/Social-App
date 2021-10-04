@@ -60,9 +60,11 @@ export default function Navbar() {
       const getInfo = () => {
         axios.get(`${API_URL}/follow/pending`, { withCredentials: true })
         .then(response => {
-            setFollowers(response.data)
-            axios.post(`${API_URL}/follow/requestUsers`, followers, { withCredentials: true })
+           setAllNotifications(response.data)
+           const userIds = response.data
+            axios.post(`${API_URL}/follow/requestUsers`, userIds, { withCredentials: true })
             .then(response => {
+              console.log('response', response)
               setFollowers(response.data)
             })
             .catch(err => console.log(err))
@@ -70,7 +72,8 @@ export default function Navbar() {
         .catch(err => console.log('follow err:',err))
     }
     getInfo(); 
-    console.log('followers', followers);
+    console.log('followers', allNotifications);
+    console.log('notify', followers)
     },[])
     
     return (
@@ -87,7 +90,7 @@ export default function Navbar() {
             </Link>
 
             <Tooltip title="Notifications" className='nav-link notifactionIcon'>
-            <Badge badgeContent={followers?.length} color="secondary">
+            <Badge badgeContent={allNotifications?.length} color="secondary">
             <CircleNotificationsIcon onClick={handleNotificationsClick} fontSize='medium'/>
             </Badge>
             </Tooltip>
@@ -195,31 +198,15 @@ export default function Navbar() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+      {followers ? followers.map(user => (
         <MenuItem>
-        <Avatar /> 
-        <Link to='/edit' className='nav-link'>
-        <span>Notifications</span> 
-       </Link> 
+            <Link to={`/visit/${user._id}`} className='nav-link'>
+                <Avatar alt={user.username} src={user.profilePicture} />
+                {user.username}
+            </Link>
         </MenuItem>
-        <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          user id
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          user id
-        </MenuItem>
-        <MenuItem onClick={logOutUser} >
-          <button className='nav-link'>
-            <LogoutIcon className='sidebarIcon' fontSize='medium'/>
-            </button>
-           user id
-        </MenuItem>
+      )) : ''}
+       
       </Menu>
              </>
         ) : (

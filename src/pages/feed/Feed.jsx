@@ -1,20 +1,22 @@
 import React from 'react'
-import Post from '../components/Post'
-import SideBar from '../components/SideBar'
-import UsersList from '../components/UsersList'
-import FeedtList from '../components/FeedList'
+import './feed.css'
+import PostForm from '../../components/feed/postForm/PostForm'
+import SideBar from '../../components/SideBar'
+import FeedtList from '../../components/feed/feedList/FeedList'
+import UsersList from '../../components/feed/usersList/UsersList'
+
 
 
 export default function Feed() {
 
 
     return (
-        <div className='profile-page'>
+        <div className='feedContainer'>
             <SideBar />
             <div className='right-profile-view'>
                 <div className='below-backdrop-view'>
                 <div className='post-card'>
-                    <Post />
+                    <PostForm />
                     <FeedtList />
                 </div>
                      <div id='profile-info' className='right-info-view'>

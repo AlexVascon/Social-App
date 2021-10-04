@@ -1,10 +1,11 @@
 import React from 'react';
+import './visit.css';
 import { useParams } from 'react-router-dom';
-import SideBar from '../components/SideBar';
-import CoverPhoto from '../components/visitProfile/CoverPhoto';
-import FriendsList from '../components/visitProfile/FriendsList';
-import PostList from '../components/visitProfile/PostList';
-import UserInfo from '../components/visitProfile/UserInfo';
+import SideBar from '../../components/SideBar';
+import FriendsList from '../../components/visitProfile/FriendsList';
+import PostList from '../../components/visitProfile/PostList';
+import UserInfo from '../../components/visitProfile/UserInfo';
+import Backdrop from '../../components/visitProfile/backdrop/Backdrop';
 
 
 export default function Visit() {
@@ -12,10 +13,10 @@ export default function Visit() {
     const { userId } = useParams();
 
     return (
-       <div className='profile-page'>
+       <div className='profilePaigeContainer'>
             <SideBar />
             <div className='right-profile-view'>
-                <CoverPhoto userId={userId} />
+                <Backdrop userId={userId} />
                 <div className='below-backdrop-view'>
                      <div className='post-card'>
                          <PostList userId={userId}/>

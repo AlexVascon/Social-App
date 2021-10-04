@@ -26,10 +26,6 @@ router.get('/friends', (req, res) => {
     });
 })
 
-// router.post('/edit', (req, res) => {
-//     const 
-// })
-
 router.get('/:userId', (req,res) => {
     const { userId } = req.params;
     User.findById(userId)

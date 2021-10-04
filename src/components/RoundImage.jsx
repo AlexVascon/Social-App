@@ -8,6 +8,7 @@ export default function RoundImage() {
 
     const [file, setFile] = useState('');
     const [username, setUsername] = useState('');
+    const [description, setDescription] = useState('');
 
     const handleUpload = e => {
         const uploadData = new FormData();
@@ -24,6 +25,7 @@ export default function RoundImage() {
             .then(response => {
                 setFile(response.data.profilePicture);
                 setUsername(response.data.username);
+                setDescription(response.data.description);
             })
             .catch(err => console.log('err:',err))
         }
@@ -31,17 +33,16 @@ export default function RoundImage() {
       })
     
 
-
     return (
         
         <div className='round-image' style={{zIndex:2}}>
          <Avatar alt={username} src={file} sx={{ width: 200, height: 200 }} className='comp-border-white'>
         <label htmlFor="file">
-        {/* <img src={file} alt="" /> */}
             <input style={{display: 'none'}} type="file" id='file' accept='.png, .jpeg, .jpg' onChange={handleUpload} />
         </label>
         </Avatar>
         {username ? <h1>{username}</h1> : 'unknown'}
+        {description ? <p>{description}</p> : 'no description'}
         </div>
        
     )
