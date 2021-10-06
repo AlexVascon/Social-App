@@ -30,11 +30,11 @@ app.use('/messages', messageRouter);
 const commentRouter = require('./routes/comment.routes');
 app.use('/comments', commentRouter);
 
-const chatRoutes = require('./routes/chat.routes');
-app.use('/chats', chatRoutes);
-
 const followRoutes = require('./routes/followers.routes');
 app.use('/follow', followRoutes);
+
+const conversationRoutes = require('./routes/conversation.routes');
+app.use('/conversations', conversationRoutes);
 
 // require("./error-handling")(app);
 app.use(function (req, res, next) {

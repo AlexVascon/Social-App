@@ -72,15 +72,15 @@ export default function PostForm() {
                 <div className='post-icons'>
                     <div className='shareOption'>
                         <label htmlFor="postFile">
-                         <PermMediaIcon fontSize='large' style={{fill: "orange" }} />
+                         <PermMediaIcon fontSize='medium' style={{fill: "purple" }} />
                          <input style={{display: 'none'}} type="file" id='postFile' accept='.png, .jpeg, .jpg' onChange={handleUploadPost} />
                          </label>
                          </div>
                      <div className='shareOption'>
-                         <LabelIcon fontSize='large' style={{fill: "blue"}}/>
+                         <LabelIcon fontSize='medium' style={{fill: "purple"}}/>
                      </div>
                      <div className='shareOption'>
-                     <LocationOnIcon fontSize='large' style={{fill: "green"}}/>
+                     <LocationOnIcon fontSize='medium' style={{fill: "purple"}}/>
                      </div>
             </div>
             <button type='submit'>Post</button>

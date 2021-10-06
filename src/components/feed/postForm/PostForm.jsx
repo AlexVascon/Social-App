@@ -60,7 +60,6 @@ export default function PostForm() {
         <form className='post-form' onSubmit={handlePostSubmit}>
         <div className='post-form-top'>
         <Avatar alt={username} src={profilePicture} sx={{ width: 40, height: 40 }} />
-        {/* {profilePicture ? <img src={profilePicture} alt='' /> : <MaterialIcon icon='account_circle' color='#FCE4EC'/>} */}
                <input 
                type="text" 
                value={description}

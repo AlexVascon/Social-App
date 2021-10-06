@@ -38,7 +38,7 @@ export default function Post(props) {
     }
 
     const handleCommentSubmit = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
 
         const postId = props.post._id
         const data = { comment, postId };

@@ -9,33 +9,48 @@ const API_URL = "http://localhost:5005";
 
 export default function FeedtList() {
 
-    const [user, setUser] = useState(null);
     const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState('');
+    // let users = [{}]
 
     useEffect(() => {
-        const getInfo = () => {
-            axios.get(`${API_URL}/profile/info`, { withCredentials: true })
-            .then(response => {
-                setUser(response.data);
-            })
-            .catch(err => console.log('err:',err))
+        const allUserPosts = async () => {
+
+            try {
+                const res = await axios.get(`${API_URL}/post/feed`, { withCredentials: true })
+
+                const postData = res.data.sort((p1,p2) => {
+                    return new Date(p2.createdAt) - new Date(p1.createdAt);
+                })
+
+                setPosts(
+                    res.data.sort((p1,p2) => {
+                        return new Date(p2.createdAt) - new Date(p1.createdAt);
+                    })
+                )
+
+                let postUsers = []
+                for (let index in postData) {
+                    const userResponse = await axios.get(`${API_URL}/users/${postData[index].userId}`, { withCredentials: true })
+                    await setUsers([...users, {user: userResponse.data, post: postData[index]}])
+                    console.log('users:', users)
+                    postUsers.push({user: userResponse.data, post: postData[index]});
+                }
+
+                setUsers(postUsers)
+              
+            } catch (err) {
+                console.log(err)
+            }
         }
-        const allUserPosts = () => {
-            axios.get(`${API_URL}/post/feed`, { withCredentials: true })
-            .then(response => {
-                setPosts(response.data);
-            })
-            .catch(err => console.log(err));
-        }
-        getInfo(); 
         allUserPosts();
     }, [])
 
     return (
         <div className='post-list'>
-        {posts.map(post => {
-           return <FeedPost post={post} user={user}/>
-        })}
+        {users ? (users.map(post => {
+           return <FeedPost post={post.post} user={post.user}/>
+        })) : ('')}
                
         </div>
     )

@@ -43,23 +43,26 @@ router.get('/viewedUser/:userId', (req,res, next) => {
 
 })
 
-router.get('/like/:postId', (req, res, next) => {
-    const { postId } = req.params;
-
-    Post.findById(postId)
-    .then(post => {
+router.get('/like/:postId', async (req,res, next) => {
+    try {
+        const { postId } = req.params;
+        const post = await Post.findById(postId)
         if(post.likes.includes(req.session.currentUser._id)) {
-            Post.findByIdAndUpdate(postId, { $pullAll: { likes: [req.session.currentUser._id]}})
-            .then(like => res.status(200).json(like))
-            .catch(err => console.log(err));
-        } else {
-            Post.findByIdAndUpdate(postId, { $addToSet: { likes: req.session.currentUser._id}})
-            .then(like => res.status(200).json(like))
-            .catch(err => console.log(err));
+            const removedLike = await Post.findByIdAndUpdate(postId, 
+                { $pullAll: { likes: [req.session.currentUser._id]} }, 
+                { new: true} 
+                )
+            res.status(203).json(removedLike);
+            return;
         }
-    })
-    .catch(err => console.log(err));
-
+       const addedLike = await Post.findByIdAndUpdate(postId, 
+        { $addToSet: { likes: req.session.currentUser._id}}, 
+        { new : true }
+        )
+       res.status(203).json(addedLike);
+    } catch (err) {
+        res.status(404);
+    }
 })
 
 router.post('/upload/postPicture', fileUploader.single('postPicture'), (req, res, next) => {

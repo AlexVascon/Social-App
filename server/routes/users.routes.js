@@ -2,6 +2,19 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/User.model');
 
+router.get("/", async (req, res) => {
+    const userId = req.query.userId;
+    const username = req.query.username;
+    try {
+      const user = userId
+        ? await User.findById(userId)
+        : await User.findOne({ username: username });
+      const { password, updatedAt, ...other } = user._doc;
+      res.status(200).json(other);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 router.get('/all', (req,res, next) => {
     User.find()
@@ -25,6 +38,25 @@ router.get('/friends', (req, res) => {
         res.status(400).json({ message: `Something went wrong or you walk a lonely road, error: ${err}`});
     });
 })
+
+router.get("/friends/:userId", async (req, res) => {
+    try {
+      const user = await User.findById(req.params.userId);
+      const friends = await Promise.all(
+        user.following.map((friendId) => {
+          return User.findById(friendId);
+        })
+      );
+      let friendList = [];
+      friends.map((friend) => {
+        const { _id, username, profilePicture } = friend;
+        friendList.push({ _id, username, profilePicture });
+      });
+      res.status(200).json(friends)
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 router.get('/:userId', (req,res) => {
     const { userId } = req.params;
@@ -50,54 +82,54 @@ router.get('/friends/:userId', (req, res) => {
 })
 
 // follow/unfollow user
-router.get('/following/:userId', (req, res, next) => {
-    // visiting user id
-    const { userId } = req.params;
+// router.get('/following/:userId', (req, res, next) => {
+//     // visiting user id
+//     const { userId } = req.params;
 
-    User.findById(userId)
-    .then(visitUser => {
-        User.findById(req.session.currentUser._id)
-        .then(loggedUser => {
-            if(visitUser.followers.includes(req.session.currentUser._id)) {
-                User.findByIdAndUpdate(visitUser._id, 
-                    { $pullAll: { 
-                         followers: [loggedUser._id]
-                      }
-                    }, { new : true } 
-                )
-                .then(visitUserFollowUpdate => {
-                    User.findByIdAndUpdate(loggedUser._id, 
-                        { $pullAll: { 
-                            following: [visitUser._id]
-                          }
-                        }, { new: true}
-                    )
-                    .then(() => {
-                        res.status(200).json(visitUserFollowUpdate)
-                    })
-                    .catch(err => res.status(500).json({ message: 'Something went wrong, error: ' + err}))
-                })
-                .catch(err =>  res.status(500).json({ message: 'Something went wrong, error: ' + err}))
-            } else {
-                User.findByIdAndUpdate(visitUser, 
-                    { $addToSet: { 
-                        followers: [loggedUser._id]
-                        }
-                    }, { new: true }
-                )
-                .then(visitUserFollowUpdate => {
-                    User.findByIdAndUpdate(loggedUser._id, { $addToSet: { following: [visitUser._id]}}, { new: true})
-                    .then(stuff => res.status(200).json(visitUserFollowUpdate))
-                    .catch(err => console.log(err))
-                })
-                .catch(err => console.log(err))
-            }
-        })
-        .catch(err => console.log(err))
+//     User.findById(userId)
+//     .then(visitUser => {
+//         User.findById(req.session.currentUser._id)
+//         .then(loggedUser => {
+//             if(visitUser.followers.includes(req.session.currentUser._id)) {
+//                 User.findByIdAndUpdate(visitUser._id, 
+//                     { $pullAll: { 
+//                          followers: [loggedUser._id]
+//                       }
+//                     }, { new : true } 
+//                 )
+//                 .then(visitUserFollowUpdate => {
+//                     User.findByIdAndUpdate(loggedUser._id, 
+//                         { $pullAll: { 
+//                             following: [visitUser._id]
+//                           }
+//                         }, { new: true}
+//                     )
+//                     .then(() => {
+//                         res.status(200).json(visitUserFollowUpdate)
+//                     })
+//                     .catch(err => res.status(500).json({ message: 'Something went wrong, error: ' + err}))
+//                 })
+//                 .catch(err =>  res.status(500).json({ message: 'Something went wrong, error: ' + err}))
+//             } else {
+//                 User.findByIdAndUpdate(visitUser, 
+//                     { $addToSet: { 
+//                         followers: [loggedUser._id]
+//                         }
+//                     }, { new: true }
+//                 )
+//                 .then(visitUserFollowUpdate => {
+//                     User.findByIdAndUpdate(loggedUser._id, { $addToSet: { following: [visitUser._id]}}, { new: true})
+//                     .then(stuff => res.status(200).json(visitUserFollowUpdate))
+//                     .catch(err => console.log(err))
+//                 })
+//                 .catch(err => console.log(err))
+//             }
+//         })
+//         .catch(err => console.log(err))
         
-    })
-    .catch(err => console.log(err))
-})
+//     })
+//     .catch(err => console.log(err))
+// })
 
 router.get('/visit/:userId', (req,res) => {
     const { userId } = req.params;

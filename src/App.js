@@ -5,12 +5,14 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } 
 from "react-router-dom";
 import Signup from './pages/Signup';
 import Feed from './pages/feed/Feed';
 import Chats from './pages/Chats';
-import Login from './pages/Login';
+// import Login from './pages/Login';
+import Login from './pages/login/Login';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import UpdateUser from './pages/UpdateUser';
@@ -19,6 +21,8 @@ import Messenger from './pages/messenger/Messenger';
 import { AuthContext } from './context/auth.context';
 import Profile from './pages/profile/Profile';
 import Visit from './pages/visit/Visit';
+import Error from './pages/error/Error';
+
 
 
 const API_URL = "http://localhost:5005";
@@ -62,6 +66,10 @@ function App() {
       <Route exact path='/login' component={Login} />
       <Route exact path='/signup' component={Signup} />
       <Route exact path='/feed' component={Feed} />
+      {user ? (<Redirect to={{pathname: '/profile'}}/>) 
+      : 
+      (<Redirect to={{pathname: '/login'}} /> )}
+      <Route component={Error} />
     </Switch>
     </div>
 

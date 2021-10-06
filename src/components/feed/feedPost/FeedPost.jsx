@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './feedPost.css';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -13,57 +13,54 @@ const API_URL = "http://localhost:5005";
 
 export default function FeedPost(props) {
 
-    const [likeAmount, setLikeAmount] = useState(props.post.likes.length);
+
+    const [likeAmount, setLikeAmount] = useState(props.post?.likes.length);
     const [commentBox, setCommentBox] = useState('none');
     const [comment, setComment] = useState('');
-    
 
     const handleComment = (e) => setComment(e.target.value);
 
-    const pressedLike = () => {
-        axios.get(`${API_URL}/post/like/${props.post._id}`, { withCredentials: true })
-        .then(response => {
-            setLikeAmount(response.data.likes.length);
-        })
-        .catch(err => console.log(err));
+    const pressedLike = async () => {
+        try {
+            const res = await axios.get(`${API_URL}/post/like/${props.post._id}`, { withCredentials: true })
+            setLikeAmount(res.data.likes.length)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const toggleComments = () => {
         commentBox === 'none' ? setCommentBox('block'): setCommentBox('none');
     }
 
-    const handleCommentSubmit = (e) => {
+    const handleCommentSubmit = async (e) => {
         e.preventDefault();
 
-        const postId = props.post._id
-        const data = { comment, postId };
-        axios.post(`${API_URL}/comments/create`, data, { withCredentials: true })
-        .then(response => {
-            console.log('comment response', response)
-        })
-        .catch(err => console.log(err));
+        try {
+            const postId = await props.post?._id
+            const data = { comment, postId };
+            await axios.post(`${API_URL}/comments/create`, data, { withCredentials: true })
+        } catch (err) {
+            console.log(err)
+        }
     }
-
-    useEffect(() => {
-        pressedLike();
-    }, [])
 
     return (
         <>
         <div className='post-body'>
         <div className='post-header'>
-        {/* <Avatar alt={props.user.username} src={props.user.profilePicture} sx={{ width: 40, height: 40 }} />
-        <h4>{props.user.username}</h4> */}
-        <div>{format(props.post.createdAt)}</div>
+        <Avatar alt={props.user?.username} src={props.user?.profilePicture} sx={{ width: 40, height: 40 }} />
+        <h4>{props.user?.username}</h4>
+        <div>{format(props.post?.createdAt)}</div>
         </div>
         <div className='post-description'>
-            <p>{props.post.description}</p>
+            <p>{props.post?.description}</p>
         </div>
         <div className='post-image'>
-        <img src={props.post.img} alt="" />
+        <img src={props.post?.img} alt="" />
         </div>
         <div className='post-comments' style={{ display: commentBox}}>
-        <Comments postId={props.post._id}/>
+        <Comments postId={props.post?._id}/>
         </div>
         <form className='post-comment-form' onSubmit={handleCommentSubmit}>
             <TextField 

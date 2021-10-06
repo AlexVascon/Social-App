@@ -1,0 +1,103 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   width: 100%;
+   height: 95vh;
+    background: radial-gradient(
+      ellipse at left bottom,
+      #771953 0%,
+      #310e68  59%,
+      #13022e  100%
+    );
+    box-shadow: 0 50px 70px -20px #310e68;
+  }
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    /* width: 40%; */
+    margin: 0;
+    padding: 5em 2em;
+    border-radius: .8em;
+    /* background-color: #310e68;
+  background-image: linear-gradient(316deg, #310e68 0%, #5f0f40 74%); */
+  /* box-shadow: 10px 15px 30px #310e68; */
+  background: radial-gradient(
+      ellipse at left bottom,
+      #13022e  0%,
+      #310e68 59%,
+      #771953 100%
+    );
+    box-shadow: 0 50px 70px -20px #1e0742;
+    margin-left: 5em;
+  }
+
+  .login h1 {
+      flex: 1;
+      font-size: 7em;
+      color: pink;
+      margin: 0 1em;
+      padding-bottom: .2em;
+      box-shadow: 0 50px 70px -20px #200847;
+  }
+  
+  .login-form input {
+    margin: 1em 0;
+    background-color: rgba(255, 192, 203, 0.192);
+    padding: 1.5em;
+    width: 70%;
+    border: none;
+    color: white;
+    border-radius: .8em;
+  }
+  
+  .login-form input::placeholder {
+    font-size: 120%;
+    /* color: rgb(179, 178, 178); */
+    /* color: rgb(199, 98, 115); */
+    color: pink;
+    font-style: italic;
+  }
+  
+  .login-form input:focus {
+    outline: none;
+    background-color: rgba(255, 192, 203, 0.192);
+  }
+  
+  .login-form button {
+      width: 65%;
+      height: 3em;
+      border-radius: .5em;
+      background: #603bbb;
+      color: white;
+      border: none;
+      font-weight: 600;
+      margin: 3em 1em 0em 1em;
+  }
+  
+  .login-form button:hover {
+    cursor: pointer;
+    background-color: #7d5ecc;
+  }
+  
+  .error {
+    color: orange;
+    margin: 0;
+    padding: 0;
+  }
+  
+  label {
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    right: 32%;
+    width: 10%;
+    font-weight: 600;
+    color: pink;
+    font-style: italic;
+    font-size: 2.5em;
+  }

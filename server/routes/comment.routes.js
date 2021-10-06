@@ -4,35 +4,19 @@ const User = require('../models/User.model');
 const Post = require('../models/Post.model');
 const Comment = require('../models/Comment.model');
 
-router.get('/users/:postId', (req,res) => {
+
+router.get('/post/:postId', async (req, res) => {
 
     const { postId } = req.params;
 
-    Comment.find({ postId: postId})
-    .then(comments => {
-        User.find()
-        .then(users => {
-            const commentUsers = comments.map(
-                comment => {
-                const userMatch = users.filter(user =>  {
-                    return user._id == comment.userId
-                })[0];
-                return {comment, userMatch}
-            });
-            res.status(200).json(commentUsers);
-        })
-        .catch(err => console.log(err))
-    })
-    .catch(err => console.log(err));
-})
+    try {
+        const comments = await Comment.find({ postId: postId})
+        .populate('sender');
 
-router.get('/post/:postId', (req, res) => {
-
-    const { postId } = req.params;
-
-    Comment.find({ postId: postId})
-    .then(postComments => res.status(200).json(postComments))
-    .catch(err => console.log(err));
+        res.status(200).json(comments);
+    } catch(err) {
+        res.status(404);
+    }
 })
 
 router.get('/delete/:commentId', (req, res) => {
@@ -44,17 +28,22 @@ router.get('/delete/:commentId', (req, res) => {
     .catch(err => console.log(err));
 })
 
-router.post('/create', (req,res) => {
+
+router.post('/create', async (req, res) => {
 
     const { comment, postId} = req.body;
 
-    Comment.create({ 
-        userId: req.session.currentUser._id, 
-        description: comment, 
-        postId: postId
-    })
-    .then(comment => res.status(200).json(comment))
-    .catch(err => console.log(err));
+    try{
+        const newComment = await Comment.create({ 
+            userId: req.session.currentUser._id, 
+            description: comment, 
+            postId: postId,
+            sender: req.session.currentUser._id
+        });
+        res.status(203).json(newComment);
+    } catch (err) {
+        res.status(404).json(err);
+    }
 })
 
 

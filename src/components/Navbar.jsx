@@ -1,12 +1,10 @@
 
 import {useContext, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import MaterialIcon, {colorPalette} from 'material-icons-react';
 import ChatIcon from '@mui/icons-material/Chat';
 import Menu from '@mui/material/Menu';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import LogoutIcon from '@mui/icons-material/Logout';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
@@ -15,7 +13,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import { AuthContext } from "../context/auth.context";
 import Badge from '@mui/material/Badge';
