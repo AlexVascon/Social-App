@@ -9,17 +9,17 @@ const app = express();
 require("./config/index")(app);
 
 // 👇 Start handling routes here
-const allRoutes = require("./routes");
-app.use("/", allRoutes);       // <== UPDATE
+// const allRoutes = require("./routes");
+// app.use("/", allRoutes);       // <== UPDATE
 
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
 
 const postRouter = require('./routes/post.routes');
-app.use('/post', isLoggedIn ,postRouter);
+app.use('/post' ,postRouter);
 
 const profileRouter = require('./routes/profile.routes');
-app.use('/profile', profileRouter);
+app.use('/profile', isLoggedIn,profileRouter);
 
 const usersRouter = require('./routes/users.routes');
 app.use('/users', usersRouter);

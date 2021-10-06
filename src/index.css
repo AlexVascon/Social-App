@@ -87,6 +87,30 @@ code {
   border: none;
 }
 
+.description {
+  outline: none;
+  border: none;
+  padding: 1em;
+  border-radius: .3em;
+}
+
+.description-form button {
+  color: white;
+    font: 700 14px sans-serif;
+    background-color: rgb(158, 69, 231);
+    border: none;
+    padding: .3em;
+    border-radius: .3em;
+}
+
+.profileImg:hover {
+   cursor: grab;
+}
+
+.dropdown {
+  background-color: rgb(74, 51, 105);
+}
+
 .nav-avatar {
   padding: .5em 1em .8em 0;
 }

@@ -32,8 +32,7 @@ export default function FeedtList() {
                 let postUsers = []
                 for (let index in postData) {
                     const userResponse = await axios.get(`${API_URL}/users/${postData[index].userId}`, { withCredentials: true })
-                    await setUsers([...users, {user: userResponse.data, post: postData[index]}])
-                    console.log('users:', users)
+                    setUsers([...users, {user: userResponse.data, post: postData[index]}])
                     postUsers.push({user: userResponse.data, post: postData[index]});
                 }
 

@@ -8,8 +8,8 @@ export default function User(props) {
 
     return (
         <div className='user-suggest'>
-            <Link to={`/visit/${props.user._id}`}>
-            <Avatar className='profileImg' alt={props.user.username} src={props.user.profilePicture} sx={{ width: 120, height: 120 }}/>
+            <Link to={`/visit/${props.user?._id}`}>
+            <Avatar className='profileImg' alt={props.user?.username} src={props.user?.profilePicture} sx={{ width: 120, height: 120 }}/>
             </Link>
         </div>
     )

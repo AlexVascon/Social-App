@@ -9,42 +9,36 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
+
 const API_URL = "http://localhost:5005";
 
 export default function Comments(props) {
 
-    const [users, setUsers] = useState([])
+    const [comments, setComments] = useState([]);
 
     
     useEffect(() => {
-        const getInfo = () => {
-            axios.get(`${API_URL}/comments/post/${props.postId}`, { withCredentials: true })
-            .then(response => {
-                console.log('ok');
-            })
-            .catch(err => console.log('err:',err))
+        const getComments = async () => {
+            try {
+                const allComments = await axios.get(`${API_URL}/comments/post/${props.postId}`, { withCredentials: true })
+                setComments(allComments.data);
+            } catch (err) {
+                console.log(err)
+            }
         }
-        const getUsers = () => {
-            axios.get(`${API_URL}/comments/users/${props.postId}`, { withCredentials: true })
-            .then(response => {
-                setUsers(response.data);
-            })
-            .catch(err => console.log('err:',err))
-        }
-        getInfo(); 
-        getUsers();
+        getComments();
     }, [])
 
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-    {users.map(user => { return(
+    {comments.map(user => { return(
         <>
         <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={user.userMatch.username} src={user.userMatch.profilePicture} />
+          <Avatar alt={user.sender.username} src={user.sender.profilePicture} />
         </ListItemAvatar>
         <ListItemText
-          primary={user.userMatch.username}
+          primary={user.sender.username}
           secondary={
             <React.Fragment>
               <Typography
@@ -54,7 +48,7 @@ export default function Comments(props) {
                 color="text.primary"
               >
               </Typography>
-              {user.comment.description}
+              {user.description}
             </React.Fragment>
           }
         />

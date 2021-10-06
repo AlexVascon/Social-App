@@ -2,8 +2,10 @@ import React from 'react';
 import './visit.css';
 import { useParams } from 'react-router-dom';
 import SideBar from '../../components/SideBar';
-import FriendsList from '../../components/visitProfile/FriendsList';
-import PostList from '../../components/visitProfile/PostList';
+// import FriendsList from '../../components/visitProfile/FriendsList';
+import FriendsList from '../../components/visitProfile/friendsList/FriendsList'
+// import PostList from '../../components/visitProfile/PostList';
+import PostList from '../../components/visitProfile/postList/PostList'
 import UserInfo from '../../components/visitProfile/UserInfo';
 import Backdrop from '../../components/visitProfile/backdrop/Backdrop';
 

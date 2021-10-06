@@ -39,9 +39,16 @@ function AuthProviderWrapper(props) {
 
   const logOutUser = () => {                                 
     localStorage.removeItem("sessionUser");
+    const logout = async () => {
+      try {
+        const res = await axios.post(`${API_URL}/profile/logout`, {} , { withCredentials: true })
+      } catch (err) {
+        console.log(err)
+      }
+    }
     setIsLoggedIn(false);
     setUser(null);
-    console.log('history', history);
+    logout();
     history.push('/login');
   } 
 

@@ -9,10 +9,11 @@ router.get('/post/:postId', async (req, res) => {
 
     const { postId } = req.params;
 
+    console.log('postId:', postId)
+
     try {
         const comments = await Comment.find({ postId: postId})
         .populate('sender');
-
         res.status(200).json(comments);
     } catch(err) {
         res.status(404);

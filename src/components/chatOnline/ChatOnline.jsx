@@ -12,21 +12,24 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get(`${API_URL}/users/friends/${currentId}`, { withCredentials: true });
-      console.log('friends data:', res.data)
-      setFriends(res.data);
+      try {
+        const res = await axios.get(`${API_URL}/users/friends/${currentId}`, { withCredentials: true });
+        setFriends(res.data);
+      } catch (err) {
+        console.log(err)
+      }
     };
 
     getFriends();
   }, [currentId]);
 
   useEffect(() => {
-    setOnlineFriends(friends.filter((f) =>  onlineUsers.includes(f._id)));
+    setOnlineFriends(friends?.filter((f) =>  onlineUsers?.includes(f?._id)));
   }, [friends, onlineUsers]);
 
   const handleClick = async (user) => {
     try {
-      const res = await axios.get(`${API_URL}/conversations/find/${currentId}/${user._id}`, { withCredentials: true });
+      const res = await axios.get(`${API_URL}/conversations/find/${currentId}/${user?._id}`, { withCredentials: true });
       setCurrentChat(res.data);
     } catch (err) {
       console.log(err);
@@ -35,15 +38,15 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
     return (
         <div className='chatOnline'>
-        {onlineFriends.map((o) => (
+        {onlineFriends ? (onlineFriends.map((o) => (
             <div className='chatOnlineFriend' onClick={() => handleClick(o)}>
                 <div className='chatOnlineImageContainer'>
-                <Avatar src={o.profilePicture} className='chatOnlineImg' sx={{ width: 32, height: 32 }}/>
+                <Avatar src={o?.profilePicture} className='chatOnlineImg' sx={{ width: 32, height: 32 }}/>
                 <div className='chatOnlineBadge'></div>
                 </div>
-                <span className='chatOnlineName'>{o.username}</span>
+                <span className='chatOnlineName'>{o?.username}</span>
             </div>
-        ))}
+        ))) : ('loading..')}
             
         </div>
     )

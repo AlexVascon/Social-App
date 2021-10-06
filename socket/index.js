@@ -1,8 +1,10 @@
 const io = require("socket.io")(6000, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "*",
     },
   });
+
+//   "http://localhost:3000"
   
   let users = [];
   

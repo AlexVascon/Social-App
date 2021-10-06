@@ -2,20 +2,38 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/User.model');
 
-router.post('/request', (req, res) => {
-    const { userId } = req.body;
+router.get('/request/:userId', async (req, res) => {
+    const { userId } = req.params;
 
-    User.findByIdAndUpdate(req.session.currentUser._id, { 
-        $addToSet: { following: [userId]}
-    })
-    .then(user => {
-        User.findByIdAndUpdate(userId, {
-            $addToSet: { followers: [user._id]}
-        })
-        .then(() => res.status(203))
-        .catch(err => res.status(404).json(err))
-    })
-    .catch(err => res.status(500).json(err))   
+    try {
+        const found = await User.findById(userId)
+
+        if(found.followers.includes(req.session.currentUser._id)) {
+            const removeFollowUser = await User.findByIdAndUpdate(req.session.currentUser._id, 
+                { $pull: { following: userId } }
+                 )
+            const removeProfileFollower = await User.findByIdAndUpdate(userId, 
+                { $pull: { followers: req.session.currentUser._id } },
+                { new: true }  
+                )
+            
+            res.status(200).json(removeProfileFollower);
+            return;
+        } else {
+            const addFollow = await User.findByIdAndUpdate(req.session.currentUser._id, 
+                { $addToSet: { following: userId } }
+                )
+
+            const addFollower = await User.findByIdAndUpdate(userId, 
+                { $addToSet: { followers: req.session.currentUser._id } },
+                { new: true }  
+                )
+     
+            res.status(200).json(addFollower);
+        }
+    } catch(err) {
+        res.status(400).json(err)
+    }
 })
 
 router.get('/pending', (req,res) => {

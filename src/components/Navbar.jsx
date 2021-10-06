@@ -51,26 +51,39 @@ export default function Navbar() {
     setNotificationsEL(null);
   };
 
+  
+
     const { isLoggedIn, user, logOutUser } = useContext(AuthContext); 
 
     useEffect(() => {
-      const getInfo = () => {
-        axios.get(`${API_URL}/follow/pending`, { withCredentials: true })
-        .then(response => {
-           setAllNotifications(response.data)
-           const userIds = response.data
-            axios.post(`${API_URL}/follow/requestUsers`, userIds, { withCredentials: true })
-            .then(response => {
-              console.log('response', response)
-              setFollowers(response.data)
-            })
-            .catch(err => console.log(err))
-        })
-        .catch(err => console.log('follow err:',err))
-    }
-    getInfo(); 
-    console.log('followers', allNotifications);
-    console.log('notify', followers)
+
+      const getNotifications = async () => {
+        try {
+          const res = await axios.get(`${API_URL}/follow/pending`, { withCredentials: true });
+          setAllNotifications(res.data);
+          const userIds = res.data;
+          const followRes = await axios.post(`${API_URL}/follow/requestUsers`, userIds, { withCredentials: true });
+          setFollowers(followRes.data);
+        } catch (err) {
+          console.log(err)
+        }
+       
+      }
+
+    //   const getInfo = () => {
+    //     axios.get(`${API_URL}/follow/pending`, { withCredentials: true })
+    //     .then(response => {
+    //        setAllNotifications(response.data)
+    //        const userIds = response.data
+    //         axios.post(`${API_URL}/follow/requestUsers`, userIds, { withCredentials: true })
+    //         .then(response => {
+    //           setFollowers(response.data)
+    //         })
+    //         .catch(err => console.log(err))
+    //     })
+    //     .catch(err => console.log('follow err:',err))
+    // }
+    getNotifications();
     },[])
     
     return (
@@ -96,7 +109,7 @@ export default function Navbar() {
             <RssFeedIcon className='sidebarIcon' fontSize='medium'/>
             </Link>
             <Link to='/profile' className='nav-avatar'>
-            <Avatar alt={user.username} src={user.profilePicture} sx={{ width: 55, height: 55 }} />
+            <Avatar alt={user?.username} src={user?.profilePicture} sx={{ width: 55, height: 55 }} />
             </Link>
             <Tooltip title="Account settings" className='nav-link'>
           <MoreVertIcon className='sidebarIcon' onClick={handleClick}  fontSize='medium'/>
@@ -126,7 +139,7 @@ export default function Navbar() {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
+              bgcolor: 'purple',
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
@@ -137,19 +150,19 @@ export default function Navbar() {
       >
         <MenuItem>
         <Avatar /> 
-        <Link to='/edit' className='nav-link'>
+        <Link to='/edit' className='nav-link '>
         <span>My account</span> 
        </Link> 
         </MenuItem>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
+        <MenuItem >
+          <ListItemIcon >
             <PersonAdd fontSize="small" />
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
+        <MenuItem >
+          <ListItemIcon >
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
@@ -186,7 +199,7 @@ export default function Navbar() {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
+              bgcolor: 'purple',
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
@@ -198,8 +211,8 @@ export default function Navbar() {
       {followers ? followers.map(user => (
         <MenuItem>
             <Link to={`/visit/${user._id}`} className='nav-link'>
-                <Avatar alt={user.username} src={user.profilePicture} />
-                {user.username}
+                <Avatar alt={user?.username} src={user?.profilePicture} />
+                <p className='nav-link'> {user?.username} </p>
             </Link>
         </MenuItem>
       )) : ''}

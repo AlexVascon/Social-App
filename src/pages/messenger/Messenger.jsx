@@ -41,15 +41,15 @@ export default function Messenger() {
 
     useEffect(() => {
         arrivalMessage &&
-          currentChat?.members.includes(arrivalMessage.sender) &&
+          currentChat?.members.includes(arrivalMessage?.sender) &&
           setMessages((prev) => [...prev, arrivalMessage]);
       }, [arrivalMessage, currentChat]);
 
     useEffect(() => {
-        socket.current.emit("addUser", user._id);
+        socket.current.emit("addUser", user?._id);
         socket.current.on("getUsers", (users) => {
           setOnlineUsers(
-            user.following.filter((f) => users.some((u) => u.userId === f))
+            user?.following.filter((f) => users.some((u) => u?.userId === f))
           );
         });
       }, [user]);
@@ -57,14 +57,14 @@ export default function Messenger() {
       useEffect(() => {
         const getConversations = async () => {
           try {
-            const res = await axios.get(`${API_URL}/conversations/` + user._id, { withCredentials: true });
+            const res = await axios.get(`${API_URL}/conversations/` + user?._id, { withCredentials: true });
             setConversations(res.data);
           } catch (err) {
             console.log(err);
           }
         };
         getConversations();
-      }, [user._id]);
+      }, [user?._id]);
 
       useEffect(() => {
         const getMessages = async () => {
@@ -81,17 +81,17 @@ export default function Messenger() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         const message = {
-          sender: user._id,
+          sender: user?._id,
           text: newMessage,
-          conversationId: currentChat._id,
+          conversationId: currentChat?._id,
         };
     
         const receiverId = currentChat.members.find(
-          (member) => member !== user._id
+          (member) => member !== user?._id
         );
     
         socket.current.emit("sendMessage", {
-          senderId: user._id,
+          senderId: user?._id,
           receiverId,
           text: newMessage,
         });
@@ -112,9 +112,8 @@ export default function Messenger() {
 
     const searchFriend =  async (friend) => {
         try {
-            const convo = { senderId: user._id  , receiverId: friend._id}
+            const convo = { senderId: user?._id  , receiverId: friend?._id}
             const res = await axios.post(`${API_URL}/conversations`, convo, { withCredentials: true })
-            console.log('convo data:', res.data)
             setConversations([...conversations, res.data])
         } catch (err) {
             console.log(err)
@@ -158,7 +157,7 @@ export default function Messenger() {
         const filtered = filter(options, params);
 
         const { inputValue } = params;
-        const isExisting = options.some((option) => inputValue === option.username);
+        const isExisting = options?.some((option) => inputValue === option?.username);
         if (inputValue !== '' && !isExisting) {
           filtered.push({
             inputValue,
@@ -187,11 +186,11 @@ export default function Messenger() {
           <img
             loading="lazy"
             width="20"
-            src={option.profilePicture}
-            srcSet={option.profilePicture}
+            src={option?.profilePicture}
+            srcSet={option?.profilePicture}
             alt=""
           />
-          {option.username} 
+          {option?.username} 
         </Box>
       )}
       sx={{ width: 300 }}
@@ -214,11 +213,11 @@ export default function Messenger() {
                     currentChat ? (
                 <>
                 <div className='chatBoxTop'>
-                {messages.map(message => (
+                {messages ? (messages.map(message => (
                     <div ref={scrollRef}>
-                    <Message message={message} own={message.sender === user._id} user={user}/>
+                    <Message message={message} own={message?.sender === user?._id} user={user}/>
                     </div>
-                ))}
+                ))) : ('...loading')}
                 </div>
                 <div className='chatBoxBottom'>
                 <textarea className='chatMessageInput' 
@@ -241,7 +240,7 @@ export default function Messenger() {
                 <div className='chatOnlineWrapper'>
                 <ChatOnline 
                     onlineUsers={onlineUsers}
-                    currentId={user._id}
+                    currentId={user?._id}
                     setCurrentChat={setCurrentChat}
                 />
                 </div>

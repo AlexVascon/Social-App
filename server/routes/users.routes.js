@@ -47,11 +47,11 @@ router.get("/friends/:userId", async (req, res) => {
           return User.findById(friendId);
         })
       );
-      let friendList = [];
-      friends.map((friend) => {
-        const { _id, username, profilePicture } = friend;
-        friendList.push({ _id, username, profilePicture });
-      });
+    //   let friendList = [];
+    //   friends.map((friend) => {
+    //     const { _id, username, profilePicture } = friend;
+    //     friendList.push({ _id, username, profilePicture });
+    //   });
       res.status(200).json(friends)
     } catch (err) {
       res.status(500).json(err);
@@ -69,17 +69,17 @@ router.get('/:userId', (req,res) => {
     });
 })
 
-router.get('/friends/:userId', (req, res) => {
-    const { userId } = req.params;
+// router.get('/friends/:userId', (req, res) => {
+//     const { userId } = req.params;
 
-    User.find()
-    .then(users => {
-        const usersFriends = users.filter(user => {
-            return user.followers.includes(userId) && user.following.includes(userId);
-        })
-        res.status(201).json(usersFriends);
-    })
-})
+//     User.find()
+//     .then(users => {
+//         const usersFriends = users.filter(user => {
+//             return user.followers.includes(userId) && user.following.includes(userId);
+//         })
+//         res.status(201).json(usersFriends);
+//     })
+// })
 
 // follow/unfollow user
 // router.get('/following/:userId', (req, res, next) => {
@@ -131,14 +131,20 @@ router.get('/friends/:userId', (req, res) => {
 //     .catch(err => console.log(err))
 // })
 
-router.get('/visit/:userId', (req,res) => {
+router.get('/visit/:userId', async (req,res) => {
     const { userId } = req.params;
 
-    User.findById(userId)
-    .then(user => {
+    try {
+        const user = await User.findById(userId);
         res.status(200).json(user);
-    })
-    .catch(err => res.status(400).json({ message: `unable to find user, error: ${err}`}));
+    } catch (err) {
+        res.status(400).json(err);
+    }
+    // User.findById(userId)
+    // .then(user => {
+    //     res.status(200).json(user);
+    // })
+    // .catch(err => res.status(400).json({ message: `unable to find user, error: ${err}`}));
 })
 
 router.get('/person/:username', (req,res, next) => {

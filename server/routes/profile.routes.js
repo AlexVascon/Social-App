@@ -4,6 +4,18 @@ const User = require('../models/User.model');
 const fileUploader = require('../config/cloudinary.config');
 
 // get user data
+router.post('/description', async (req, res) => {
+    console.log('req body:', req.body)
+    try {
+        const user = await User.findByIdAndUpdate(req.session.currentUser._id, {
+            description: req.body.description
+        })
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 router.get('/info', (req, res) => {
     User.findById(req.session.currentUser._id)
     .then(user => {
@@ -29,6 +41,18 @@ router.post('/info', (req,res) => {
     .catch(err => console.log(err))
 
 });
+
+router.post('/description', async (req, res) => {
+    console.log('req body:', req.body)
+    try {
+        const user = await User.findByIdAndUpdate(req.session.currentUser._id, {
+            description: req.body
+        })
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
 
 // upload cover image to cloudinary and recieve url path 
 router.post('/upload/coverPicture', fileUploader.single('coverPicture'),(req, res, next) => {
@@ -77,5 +101,9 @@ router.get('/delete', (req,res, next) => {
     });
 })
 
+router.post('/logout', (req, res) => {
+        req.session.destroy()
+        res.json({ message: 'user correctly logged out'});
+})
 
 module.exports = router;

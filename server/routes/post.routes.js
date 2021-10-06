@@ -33,13 +33,19 @@ router.get('/all', (req,res, next) => {
 
 })
 
-router.get('/viewedUser/:userId', (req,res, next) => {
-    const { userId } = req.params;
-    Post.find({ userId: userId})
-    .then(posts => {
+router.get('/viewedUser/:userId', async (req,res, next) => {
+
+    try {
+        const posts = await Post.find({ userId: req.params.userId })
         res.status(200).json(posts)
-    })
-    .catch(err => console.log('user not found. Error: ', err));
+    } catch(err) {
+        res.status(400).json(err)
+    }
+    // Post.find({ userId: userId})
+    // .then(posts => {
+    //     res.status(200).json(posts)
+    // })
+    // .catch(err => console.log('user not found. Error: ', err));
 
 })
 

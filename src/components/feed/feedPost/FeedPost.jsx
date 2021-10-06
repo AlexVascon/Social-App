@@ -3,7 +3,7 @@ import './feedPost.css';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ChatIcon from '@mui/icons-material/Chat';
 import axios from 'axios';
-import Comments from '../../Comments';
+import Comments from '../comments/Comments';
 import { TextField } from '@material-ui/core';
 import { Avatar, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
@@ -39,6 +39,7 @@ export default function FeedPost(props) {
         try {
             const postId = await props.post?._id
             const data = { comment, postId };
+            console.log('data:', data);
             await axios.post(`${API_URL}/comments/create`, data, { withCredentials: true })
         } catch (err) {
             console.log(err)
